@@ -9,20 +9,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @RestControllerAdvice
 @Order(value = 2)
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<Api<Object>> globalException(
+    public ResponseEntity<Api<Object>> handleGlobalException(
             Exception exception
     ) {
+
+        log.error("GlobalExceptionHandler: {}",exception.getMessage());
         var body = Api.builder()
-                .status(String.valueOf(HttpStatus.BAD_REQUEST.value()))
-                .message(HttpStatus.BAD_REQUEST.getReasonPhrase())
-                .data(exception.getMessage())
+                .status(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .message(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .build();
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
 }

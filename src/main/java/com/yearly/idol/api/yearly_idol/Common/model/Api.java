@@ -4,7 +4,6 @@ package com.yearly.idol.api.yearly_idol.Common.model;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class Api <T> {
     @Valid
     private T data;
 
-    private Error error;
+    private Error errorMessageForClient;
 
     @Data
     @NoArgsConstructor
