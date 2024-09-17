@@ -15,7 +15,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class UserLocalSignUpDto {
+public class UserSignUpRequest
+{
     @Email
     private String email;
 
