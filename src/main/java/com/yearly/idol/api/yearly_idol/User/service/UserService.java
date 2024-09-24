@@ -1,15 +1,15 @@
 package com.yearly.idol.api.yearly_idol.User.service;
 
+import com.yearly.idol.api.yearly_idol.SchedulerContent.service.SchedulerContentService;
 import com.yearly.idol.api.yearly_idol.User.db.UserEntity;
 import com.yearly.idol.api.yearly_idol.User.db.UserRepository;
 import com.yearly.idol.api.yearly_idol.User.model.UserDetailDto;
 import com.yearly.idol.api.yearly_idol.User.model.UserLoginRequest;
 import com.yearly.idol.api.yearly_idol.User.model.UserSignUpRequest;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,16 +23,18 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserConverter userConverter;
+    private final SchedulerContentService schedulerService;
     private final JwtService jwtService;
 
+    @Transactional
     public UserSignUpRequest signUp(
             UserSignUpRequest userSignUpRequest
     ) {
        validateExistAccountByEmail(userSignUpRequest);
 
        var userEntity = userConverter.toEntity(userSignUpRequest);
-
        userRepository.save(userEntity);
+       schedulerService.createScheduler(userEntity.getId());
        return userConverter.toDto(userEntity);
     }
     
@@ -41,7 +43,6 @@ public class UserService {
             UserLoginRequest userLoginRequest,
             HttpServletResponse httpServletResponse
     ) {
-        // @TODO jwt 헤더에 추가해서 내려주기
         // @TODO 로그인 인증 절차 없음
         // @TODO Enum 으로 에러 메시지 관리
         var userEntity = validateExistAccountByEmailAndPassword(userLoginRequest);

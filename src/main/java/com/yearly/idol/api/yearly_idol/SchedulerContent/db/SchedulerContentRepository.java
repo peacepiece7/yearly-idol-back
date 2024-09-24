@@ -1,4 +1,4 @@
-package com.yearly.idol.api.yearly_idol.Scheduler.db;
+package com.yearly.idol.api.yearly_idol.SchedulerContent.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -4,10 +4,8 @@ import com.yearly.idol.api.yearly_idol.Common.model.Api;
 import com.yearly.idol.api.yearly_idol.User.model.UserDetailDto;
 import com.yearly.idol.api.yearly_idol.User.model.UserLoginRequest;
 import com.yearly.idol.api.yearly_idol.User.model.UserSignUpRequest;
-import com.yearly.idol.api.yearly_idol.User.service.JwtService;
 import com.yearly.idol.api.yearly_idol.User.service.UserService;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    private final JwtService jwtService;
 
     @GetMapping("/me")
     public ResponseEntity<Api<UserDetailDto>> me(

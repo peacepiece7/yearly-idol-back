@@ -24,4 +24,9 @@ public class SchedulerEntity {
     private Long UserId;
 
     private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
